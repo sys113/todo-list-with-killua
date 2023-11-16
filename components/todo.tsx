@@ -1,6 +1,10 @@
+"use client";
+
 import IconEdit from "@/assets/icons/edit.svg";
 import IconTrash from "@/assets/icons/trash.svg";
+import { thunderTodos } from "@/thunders/todo";
 import { TTodo } from "@/types/todo";
+import { useKillua } from "killua";
 
 interface IProps {
   todo: TTodo;
@@ -8,6 +12,9 @@ interface IProps {
 }
 
 export default function Todo(props: IProps) {
+  // remove todo from localstorage
+  const localStorageTodos = useKillua(thunderTodos);
+
   return (
     <div className="overflow-hidden rounded-lg border border-gray-600 bg-slate-800">
       {/* head */}
@@ -17,7 +24,11 @@ export default function Todo(props: IProps) {
           <button>
             <IconEdit />
           </button>
-          <button>
+          <button
+            onClick={() => {
+              localStorageTodos.reducers.remove(props.todo.id);
+            }}
+          >
             <IconTrash />
           </button>
         </div>
