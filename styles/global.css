@@ -1,0 +1,32 @@
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* disable background blue after click */
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* scroll smoosh */
+html {
+  scroll-behavior: smooth !important;
+}
+
+/* minimal scrollbar */
+.minimal-scrollbar {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 7px;
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #9c9a9a;
+    border-radius: 10px;
+  }
+}
