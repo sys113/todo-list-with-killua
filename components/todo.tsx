@@ -5,17 +5,15 @@ import { TTodo } from "@/types/todo";
 interface IProps {
   todo: TTodo;
   index: number;
-};
+}
 
 export default function Todo(props: IProps) {
   return (
-    <div
-      className="overflow-hidden rounded-lg border border-gray-600 bg-slate-800"
-    >
+    <div className="overflow-hidden rounded-lg border border-gray-600 bg-slate-800">
       {/* head */}
       <div className="flex justify-between p-3.5">
         <p className="px-2">{props.index + 1}</p>
-        <div className="flex todos-center gap-2">
+        <div className="todos-center flex gap-2">
           <button>
             <IconEdit />
           </button>
