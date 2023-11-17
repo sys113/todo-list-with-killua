@@ -11,7 +11,7 @@ interface IProps {
   index: number;
 }
 
-export default function Todo(props: IProps) {
+export default function Todo(props: IProps): JSX.Element {
   // remove todo from localstorage
   const localStorageTodos = useKillua(thunderTodos);
 
@@ -35,27 +35,30 @@ export default function Todo(props: IProps) {
       </div>
       {/* body */}
       <div>
-        {/* title */}
-        <div className="relative border-t border-gray-600 p-3.5">
-          <span className="title absolute -top-2 left-2 bg-slate-800 px-2">
-            title
-          </span>
-          <p>{props.todo.title}</p>
-        </div>
-        {/* description */}
-        <div className="relative border-t border-gray-600 p-3.5">
-          <span className="title absolute -top-2 left-2 bg-slate-800 px-2">
-            description
-          </span>
-          <p>{props.todo.description}</p>
-        </div>
-        {/* status */}
-        <div className="relative border-t border-gray-600 p-3.5">
-          <span className="title absolute -top-2 left-2 bg-slate-800 px-2">
-            status
-          </span>
-          <p>{props.todo.status}</p>
-        </div>
+        {[
+          {
+            title: "title",
+            text: props.todo.title,
+          },
+          {
+            title: "description",
+            text: props.todo.description,
+          },
+          {
+            title: "status",
+            text: props.todo.status,
+          },
+        ].map((item) => (
+          <div
+            key={item.text}
+            className="relative border-t border-gray-600 p-3.5"
+          >
+            <span className="title absolute -top-2 left-2 bg-slate-800 text-gray-300 px-2">
+              {item.title}
+            </span>
+            <p>{item.text}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
