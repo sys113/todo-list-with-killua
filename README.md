@@ -12,3 +12,6 @@
 - husky
 - commitlint
 - lint-staged
+- toastify
+- react-select
+- svgr

@@ -8,6 +8,11 @@
   @apply transform transition-all duration-300 active:scale-95;
 }
 
+/* disable outline after focus */
+*:focus {
+  outline: none;
+}
+
 /* disable background blue after click */
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -33,5 +38,40 @@ html {
   &::-webkit-scrollbar-thumb {
     background-color: #9c9a9a;
     border-radius: 10px;
+  }
+}
+
+/* select status dropdown customize */
+.dropdown-select-status {
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    max-height: 0 !important;
+    font-size: 13px !important;
+    background-color: transparent !important;
+    .css-1dimb5e-singleValue {
+      color: #fff !important;
+      font-size: 15px !important;
+    }
+  }
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    &:focus-within {
+      box-shadow: none !important;
+      border-color: #b5b5b5 !important;
+    }
+  }
+  .css-1nmdiq5-menu {
+    border: 1px solid #555;
+    font-size: 14px !important;
+    background-color: #1f2937 !important;
+    div div {
+      background-color: transparent;
+      &:hover {
+        background-color: #9333ea !important;
+      }
+    }
   }
 }

@@ -27,3 +27,4 @@ vite.config.*.timestamp*
 tsconfig.tsbuildinfo
 tsconfig.*.tsbuildinfo
 /storybook-static/
+.vercel
