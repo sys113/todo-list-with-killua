@@ -23,7 +23,7 @@ export default function Template(props: IProps): JSX.Element {
           <p>Todo List</p>
           <button
             onClick={(): void => setIsOpenModalAddTodo(true)}
-            className="btn-animation rounded-md bg-purple-600 px-7 py-[8px] text-white transition-all duration-300"
+            className="btn-animation rounded-md bg-purple-600 px-7 py-2 text-white transition-all duration-300"
           >
             Add
           </button>

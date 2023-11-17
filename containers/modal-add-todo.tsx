@@ -88,7 +88,7 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
 
   return (
     <section
-      className={`fixed inset-0 z-[60] flex h-screen w-screen items-center justify-center backdrop-blur-[2px] transition-all duration-500${
+      className={`fixed inset-0 z-50 flex h-screen w-screen items-center justify-center backdrop-blur-[2px] transition-all duration-500 ${
         props.isOpen ? "visible bg-black/20" : "invisible opacity-0"
       }`}
     >
