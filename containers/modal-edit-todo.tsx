@@ -2,19 +2,22 @@
 
 import { useFormik } from "formik";
 import { useKillua } from "killua";
+import { useEffect } from "react";
+import Select from "react-select";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
 import IconXMark from "@/assets/icons/x-mark.svg";
 import { thunderTodos } from "@/thunders/todos";
-import { generateUniqueId } from "@/utils/generate-unique-id";
+import type { TTodo } from "@/types/todo";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  todo: TTodo;
 }
 
-export default function ModalAddTodo(props: IProps): JSX.Element {
+export default function ModalEditTodo(props: IProps): JSX.Element {
   // add todo to to localstorage / get todos length
   const localStorageTodos = useKillua(thunderTodos);
 
@@ -22,6 +25,7 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
   interface IFormik {
     title: string;
     description: string;
+    status: "blocked" | "done" | "inProgress" | "inQA" | "todo";
   }
   const formikConstant = {
     fields: {
@@ -44,14 +48,32 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
           canBeUpTo300Characters: "Description can be up to 300 characters!",
         },
       },
+      status: {
+        label: "Status",
+        options: (() => {
+          switch (props.todo.status) {
+            case "todo":
+              return ["inProgress"];
+            case "inProgress":
+              return ["inQA", "blocked"];
+            case "inQA":
+              return ["done"];
+            case "blocked":
+              return ["todo"];
+            default:
+              return [];
+          }
+        })(),
+      },
     },
-    title: "Add Todo",
-    submit: "Add Todo",
+    title: "Edit Todo",
+    submit: "Edit Todo",
   };
   const formik = useFormik<IFormik>({
     initialValues: {
-      title: "",
-      description: "",
+      title: props.todo.title,
+      description: props.todo.description,
+      status: props.todo.status,
     },
     validationSchema: toFormikValidationSchema(
       z.object({
@@ -73,18 +95,27 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
       }),
     ),
     onSubmit: async (values) => {
-      // add todo to localstorage
-      localStorageTodos.reducers.add({
-        id: generateUniqueId(),
+      // edit todo from localstorage
+      localStorageTodos.reducers.edit({
+        id: props.todo.id,
         title: values.title,
         description: values.description,
-        status: "todo",
+        status: values.status,
       });
       // close modal / reset form
       props.onClose();
       formik.resetForm();
     },
   });
+
+  // set formik default values after open modal
+  useEffect(() => {
+    if (props.isOpen) {
+      formik.setFieldValue("title", props.todo.title);
+      formik.setFieldValue("description", props.todo.description);
+      formik.setFieldValue("status", props.todo.status);
+    }
+  }, [props.isOpen]);
 
   return (
     <section
@@ -190,6 +221,50 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
                   </span>
                 ) : null}
               </div>
+              {/* status (hide in status `done`) */}
+              {props.todo.status !== "done" && (
+                <div>
+                  <div
+                    className={`field !p-1 ${
+                      formik.errors.status && formik.touched.status
+                        ? "!border-red-500"
+                        : "!border-gray-600"
+                    }`}
+                  >
+                    <label
+                      className={
+                        formik.errors.status && formik.touched.status
+                          ? "text-red-500"
+                          : "text-white"
+                      }
+                    >
+                      {formikConstant.fields.status.label}
+                    </label>
+                    <Select
+                      {...formik.getFieldProps("status")}
+                      value={{
+                        value: formik.values.status,
+                        label: formik.values.status,
+                      }}
+                      options={formikConstant.fields.status.options.map(
+                        (t) => ({
+                          value: t,
+                          label: t,
+                        }),
+                      )}
+                      className="dropdown-select-status"
+                      onChange={(value: any) =>
+                        formik.setFieldValue("status", value.value)
+                      }
+                    />
+                  </div>
+                  {formik.errors.status && formik.touched.status ? (
+                    <span className="ml-1.5 pt-0.5 text-sm text-red-500">
+                      {formik.errors.status}
+                    </span>
+                  ) : null}
+                </div>
+              )}
             </div>
             {/* submit btn */}
             <button
