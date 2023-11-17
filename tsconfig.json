@@ -2,8 +2,11 @@
   "extends": "@fullstacksjs/tsconfig/next",
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     },
     "strictNullChecks": true
   },
@@ -15,5 +18,9 @@
     ".next/types/**/*.ts",
     "tailwind.config.js"
   ],
-  "exclude": ["node_modules", ".vscode", ".next"]
+  "exclude": [
+    "node_modules",
+    ".vscode",
+    ".next"
+  ]
 }
