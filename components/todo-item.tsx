@@ -70,7 +70,7 @@ export default function TodoItem(props: IProps): JSX.Element {
               key={item.text}
               className="relative border-t border-gray-600 p-3.5"
             >
-              <span className="title absolute -top-2 left-2 bg-slate-800 px-2 text-gray-300">
+              <span className="absolute -top-2 left-2 bg-slate-800 px-2 text-gray-300">
                 {item.title}
               </span>
               <p>{item.text}</p>

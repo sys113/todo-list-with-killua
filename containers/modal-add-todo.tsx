@@ -93,7 +93,7 @@ export default function ModalAddTodo(props: IProps): JSX.Element {
       }`}
     >
       <div
-        className={`flex w-full items-center justify-center transition-all duration-300 ${
+        className={`flex w-full h-full items-center justify-center transition-all duration-300 ${
           props.isOpen
             ? "visible scale-100 opacity-100"
             : "invisible scale-75 lg:opacity-0"
